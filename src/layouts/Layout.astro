@@ -1,0 +1,52 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const {
+	title = "Cristopher Scott - Full Stack Developer",
+	description = "Portafolio de Cristopher Scott, desarrollador full stack especializado en crear soluciones web robustas, escalables y con estilo. Código limpio, lógica sólida y un toque de café.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+					return localStorage.getItem("theme");
+				}
+				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					return "dark";
+				}
+				return "light";
+			})();
+
+			if (theme === "dark") {
+				document.documentElement.classList.add("dark");
+			} else {
+				document.documentElement.classList.remove("dark");
+			}
+		</script>
+	</head>
+	<body
+		class="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900 text-zinc-900 dark:text-white antialiased pt-[73px] flex flex-col transition-colors"
+	>
+		<Navbar />
+		<main class="flex-1 container mx-auto px-4 py-8">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>
